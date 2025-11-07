@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "proj-openshift-chart.fullname" . }}
+  labels:
+    {{- include "proj-openshift-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "proj-openshift-chart.selectorLabels" . | nindent 4 }}

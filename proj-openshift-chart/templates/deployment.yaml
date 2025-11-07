@@ -53,13 +53,13 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- with .Values.livenessProbe }}
+          {{- if .Values.livenessProbe.enabled }}
           livenessProbe:
-            {{- toYaml . | nindent 12 }}
+            {{- omit .Values.livenessProbe "enabled" | toYaml | nindent 12 }}
           {{- end }}
-          {{- with .Values.readinessProbe }}
+          {{- if .Values.readinessProbe.enabled }}
           readinessProbe:
-            {{- toYaml . | nindent 12 }}
+            {{- omit .Values.readinessProbe "enabled" | toYaml | nindent 12 }}
           {{- end }}
           {{- with .Values.resources }}
           resources:
